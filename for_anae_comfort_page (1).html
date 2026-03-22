@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Little Something For You 💙</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100dvh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 420px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      z-index: 2;
+    }
+
+    h1 { font-size: 22px; margin-bottom: 16px; }
+    p { font-size: 15px; line-height: 1.6; margin: 8px 0; }
+
+    .personal { margin-top: 12px; font-size: 14px; opacity: 0.9; }
+
+    button {
+      margin-top: 18px;
+      padding: 14px 22px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #00c6ff;
+      color: white;
+      width: 100%;
+    }
+
+    button:active { transform: scale(0.96); }
+
+    #smileMessage, #hugMessage {
+      margin-top: 18px;
+      font-size: 17px;
+      color: #ffd700;
+      display: none;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      margin-top: 10px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #ffd700;
+      transition: width 1s linear;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp 4s linear forwards;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>A Little Something For You 💙</h1>
+
+    <p>I know you're missing him…</p>
+    <p>But you're stronger than you think.</p>
+    <p>He’ll be back soon, and you’ll have so much to talk about.</p>
+    <p>Till then… I’m here to make you smile 😊</p>
+
+    <p class="personal">I’m here… even if it’s just to sit silently with you 😊</p>
+
+    <button onclick="showSmile()">Smile for me 😊</button>
+
+    <div id="smileMessage">There it is… that smile I was waiting for ❤️</div>
+
+    <button id="hugBtn" onclick="sendHug()" style="display:none;">Need a hug? 🤗</button>
+
+    <div id="hugMessage"></div>
+
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+
+  <script>
+    function showSmile() {
+      document.getElementById('smileMessage').style.display = 'block';
+      document.getElementById('hugBtn').style.display = 'block';
+
+      for (let i = 0; i < 10; i++) {
+        let heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '💙';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '80vh';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+    }
+
+    function sendHug() {
+      let msg = document.getElementById('hugMessage');
+      let progressBar = document.getElementById('progressBar');
+      let progressContainer = document.getElementById('progressContainer');
+
+      msg.style.display = 'block';
+      progressContainer.style.display = 'block';
+
+      let time = 10;
+      msg.innerHTML = 'Sending a tight hug… 🤗';
+      progressBar.style.width = '0%';
+
+      if (navigator.vibrate) navigator.vibrate(200);
+
+      setTimeout(() => {
+        let interval = setInterval(() => {
+          progressBar.style.width = ((10 - time) * 10) + '%';
+          msg.innerHTML = 'Hold it… ' + time + 's 💛';
+
+          if (navigator.vibrate) navigator.vibrate(100);
+
+          time--;
+
+          if (time < 0) {
+            clearInterval(interval);
+            msg.innerHTML = 'Hug delivered 💛 You’re okay 😊';
+
+            if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+          }
+        }, 1000);
+      }, 1000);
+    }
+
+    for (let i = 0; i < 40; i++) {
+      let star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.left = Math.random() * 100 + 'vw';
+      document.body.appendChild(star);
+    }
+  </script>
+
+</body>
+</html>
